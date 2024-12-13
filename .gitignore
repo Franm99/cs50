@@ -1,0 +1,13 @@
+# vscode
+.vscode/
+
+# Compiler
+**/*.obj
+**/*.exe
+
+# debugger
+**/*.ilk
+**/*.pdb
+
+# playground
+
