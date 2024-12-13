@@ -3,7 +3,7 @@
 #include <math.h>
 
 #define TEXT_LIMIT 5000
-
+ 
 int count_letters(char* text);
 int count_words(char* text);
 int count_sentences(char* text);
