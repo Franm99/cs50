@@ -189,12 +189,40 @@ void sort_pairs(void)
         pairs[higher_strength_pair_idx] = tmp;
     }
 
-    // printf("Pairs after sorting:\n");
-    // for (int i = 0; i < pair_count; i++)
-    // {
-    //     printf("'%d' over '%d' (preference = '%d')\n", pairs[i].winner, pairs[i].loser, preferences[pairs[i].winner][pairs[i].loser]);
-    // }
-    // return;
+    printf("Pairs after sorting:\n");
+    for (int i = 0; i < pair_count; i++)
+    {
+        printf("'%d' over '%d' (preference = '%d')\n", pairs[i].winner, pairs[i].loser, preferences[pairs[i].winner][pairs[i].loser]);
+    }
+    return;
+}
+
+// Checks if a winner-loser pair creates a cycle in the graph.
+bool has_cycle(int winner, int loser)
+{
+    while (winner != -1 && winner != loser)
+    {
+        bool found = false;
+        for (int i = 0; i < candidate_count; i++)
+        {
+            if (locked[i][winner]) // Did anyone won previously to 'winner'?
+            {
+                // If so, let's check the "winner" of the winner.
+                found = true;
+                winner = i;
+            }
+        }
+        if (!found)  // There is no winner for the current winner. No cycle is possible.
+        {
+            winner = -1;
+        }
+    }
+    if (winner == loser)
+    {
+        // There is already an edge that places our current winner as a loser.
+        return true;
+    }
+    return false;
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
@@ -202,16 +230,7 @@ void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++)
     {
-        bool is_locked = false;
-        for (int j = 0; j < pair_count; j++)
-        {
-            if (locked[pairs[i].loser][j])
-            {
-                is_locked = true;
-                break;
-            }
-        }
-        if (!is_locked)
+        if (!has_cycle(pairs[i].winner, pairs[i].loser))
         {
             locked[pairs[i].winner][pairs[i].loser] = true;
         }
@@ -232,19 +251,21 @@ void lock_pairs(void)
 // Print the winner of the election
 void print_winner(void)
 {
-    bool someone_won = false;
-    for (int i = 0; i < pair_count; i++)
+    for (int col = 0; col < MAX; col++)
     {
-        if (someone_won)
-            break;
-
-        for (int j = 0; j < pair_count; j++)
+        bool found_source = true;
+        for (int row = 0; row < MAX; row++)
         {
-            if (locked[i][j])
+            if (locked[row][col] == true)
             {
-                printf("Winner: %s\n", candidates[i]);
-                someone_won = true;
+                found_source = false;
+                break;
             }
+        }
+        if (found_source)
+        {
+            printf("%s\n", candidates[col]);
+            return;
         }
     }
     return;
