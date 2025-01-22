@@ -1,0 +1,10 @@
+1. Queues 
+    - FIFO (First In, First Out).
+    - Have a limit of elements.
+    - Items are "enqueued" and "dequeued".
+
+2. Stacks
+    - LIFO (Last In, First Out).
+    - push: add to top of stack.
+    - pop: remove from top of stack.
+
