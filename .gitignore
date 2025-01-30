@@ -12,3 +12,6 @@
 
 # playground
 
+# databases
+**/*.db
+
