@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            // TODO: Add code to check answers to questions
+            let answered_1 = false;
+            let answered_2 = false;
+
+            function changeColorIfCorrect(clicked_button) {
+                console.log("button clicked: " + clicked_button);
+                if (!answered_1){
+                    btn = document.getElementById(clicked_button);
+
+                    if (clicked_button == "q1-ans3") {
+                        btn.style.background = "#00EE00";
+                    } else {
+                        btn.style.background = "#EE0000";
+                    }
+                    answered_1 = true;
+                }
+            }
+
+            function checkIfCorrectAnswer2(){
+                if (answered_2) {
+                    return;
+                }
+                correct_answer = "Dave Grohl";
+                input =  document.getElementById("q2-input");
+                hint = document.getElementById("q2-hint");
+                answer = input.value;
+                console.log(answer);
+                if (answer == "") {
+                    input.style.background = "#EEEEEE";
+                    hint.textContent = "Please take a guess."
+                } else if (answer != correct_answer) {
+                    hint.textContent = "Incorrect";
+                    input.style.background = "#EE0000";
+                    answered_2 = true;
+                } else {
+                    hint.textContent = "Correct!";
+                    input.style.background = "#00EE00";
+                    answered_2 = true;
+                }
+
+            }
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <h3>Question 1: How much Toms does a normal drumset has?</h3>
+                <button id="q1-ans1" class="q1-ans" onclick="changeColorIfCorrect(this.id)">1 (Floor Tom)</button>
+                <button id="q1-ans2" class="q1-ans" onclick="changeColorIfCorrect(this.id)">2 (Mounted Toms)</button>
+                <button id="q1-ans3" class="q1-ans" onclick="changeColorIfCorrect(this.id)">3 (Floor and two mounted Toms)</button>
+                <button id="q1-ans4" class="q1-ans" onclick="changeColorIfCorrect(this.id)">4 (Two floor and two mounted Toms)</button>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <h3>Question 2: Who was the most popular drummer in the band <em>Nirvana</em>?</h3>
+                <input id="q2-input" type="text"/>
+                <button id="q2-check" onclick="checkIfCorrectAnswer2()">Check answer</button>
+                <span id="q2-hint"></span>
+            </div>
+        </div>
+    </body>
+</html>
