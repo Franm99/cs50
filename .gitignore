@@ -14,7 +14,8 @@
 
 # databases
 **/*.db
+**/*.db-journal
 
 # virtualenv
-**/.venv
+**/venv
 
